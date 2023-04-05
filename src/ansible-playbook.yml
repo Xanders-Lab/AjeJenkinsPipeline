@@ -1,5 +1,5 @@
 ---
-  name: copy files on all dev environments to /tmp/backup
+  name: copy files on all DEV environments to /tmp/backup
   hosts: dev.dously.com
   tasks:
     - name: copy all files to /tmp/backup
@@ -7,6 +7,14 @@
          src: /etc/*
          dest: /tmp/backup
 
+  name: copy files on all STG environments to /tmp/backup/stg
+  hosts: stg.dously.com
+  tasks:
+    - name: copy all files to /tmp/backup/stg
+    - copy:
+         src: /etc/*
+         dest: /tmp/backup/stg
+         
 name: check if autofs package is installed
 hosts: qa.dously.com
 tasks:
@@ -21,3 +29,4 @@ tasks:
          name: autofs
          state: started
          enabled: true
+

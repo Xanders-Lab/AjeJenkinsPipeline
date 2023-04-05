@@ -1,0 +1,31 @@
+---
+  name: copy files on all PRD environments to /tmp/backup
+  hosts: dously.com
+  tasks:
+    - name: copy all files to /tmp/backup
+    - copy:
+         src: /etc/*
+         dest: /tmp/backup
+
+  name: copy files on all STG environments to /tmp/backup/prd
+  hosts: stg.dously.com
+  tasks:
+    - name: copy all files to /tmp/backup/prd
+    - copy:
+         src: /etc/*
+         dest: /tmp/backup/prd
+         
+name: check if autofs package is installed
+hosts: qa.dously.com
+tasks:
+    - name: check for autofs
+    - state: present
+
+name: Check and start autofs
+hosts: prod.dously.com
+tasks:
+    - name: verify if autofs is enabled and running, if not start the service
+    - service:
+         name: autofs
+         state: started
+         enabled: true
